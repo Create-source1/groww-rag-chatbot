@@ -1,6 +1,6 @@
 """Document management API endpoints."""
 from fastapi import APIRouter, HTTPException, Depends
-from app.api.schemas.document import DocumentListResponse, DeleteResponse
+from app.api.schemas.document import DocumentListResponse, DeleteResponse, DocumentInfo
 
 router = APIRouter()
 
@@ -14,7 +14,19 @@ def get_ingestion_pipeline():
 @router.get("/api/documents", response_model=DocumentListResponse)
 async def list_documents(pipeline=Depends(get_ingestion_pipeline)):
     """List all ingested documents."""
-    documents = pipeline.document_store.list_documents()
+    documents = [
+        DocumentInfo(
+            document_id=d.document_id,
+            title=d.title,
+            source=d.source,
+            file_type=d.file_type,
+            file_size=d.file_size,
+            chunk_count=d.chunk_count,
+            ingested_at=d.ingested_at.isoformat(),
+            status=d.status,
+        )
+        for d in pipeline.document_store.list_documents()
+    ]
     return DocumentListResponse(
         documents=documents,
         total=len(documents)
