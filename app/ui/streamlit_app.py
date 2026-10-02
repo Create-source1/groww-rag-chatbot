@@ -43,15 +43,14 @@ def call_chat_api(query: str) -> dict:
 def main():
     """Main Streamlit app."""
     st.title("📈 Groww RAG Chatbot")
-    st.caption("Ask me anything about Groww or investing!")
+    st.caption("Answers about HDFC mutual fund schemes — expense ratio, exit load, SIP, lock-in, benchmark and more.")
 
     # Sidebar
     with st.sidebar:
         st.header("About")
         st.info(
-            "This is a RAG-powered chatbot for the Groww investment platform. "
-            "It uses retrieval-augmented generation to answer questions based on "
-            "a curated knowledge base."
+            "This is a RAG-powered FAQ assistant over official Groww pages for 5 HDFC "
+            "mutual fund schemes. It answers factual questions only — no investment advice."
         )
 
         if st.button("Clear Chat"):
