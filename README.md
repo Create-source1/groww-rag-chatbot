@@ -49,6 +49,30 @@ $env:PYTHONPATH="."; py -3.11 -m streamlit run app/ui/streamlit_app.py
 API docs: http://localhost:8000/docs
 UI: http://localhost:8501
 
+## Deployment on Render
+
+Two web services (both from the same GitHub repo):
+
+**API service**
+| Field | Value |
+|---|---|
+| Runtime | Python 3 |
+| Root Directory | *(blank)* |
+| Build Command | `pip install -r requirements.txt && PYTHONPATH=. python tests/ingest_docs.py` |
+| Start Command | `PYTHONPATH=. uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
+| Env vars | `PYTHON_VERSION=3.11.0`, `PYTHONPATH=.`, `GROQ_API_KEY`, `GROQ_MODEL=qwen/qwen3.8-27b`, plus chunking/retrieval/storage vars (see `.env.example`) |
+
+**UI service** (Streamlit)
+| Field | Value |
+|---|---|
+| Runtime | Python 3 |
+| Root Directory | *(blank)* |
+| Build Command | `pip install -r requirements.txt` |
+| Start Command | `PYTHONPATH=. streamlit run app/ui/streamlit_app.py --server.port $PORT --server.address 0.0.0.0` |
+| Env vars | `PYTHON_VERSION=3.11.0`, `PYTHONPATH=.`, `API_URL=https://<your-api-service>.onrender.com` |
+
+> The UI service only needs `API_URL` — LLM calls happen in the API service, so the Groq key stays only there.
+
 ## Project structure
 
 ```
