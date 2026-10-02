@@ -7,7 +7,7 @@ import json
 import numpy as np
 
 # Add project root to path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.storage.document_store import DocumentStore
 from app.storage.vector_store import VectorStore
@@ -29,7 +29,7 @@ def main():
     vector_store.set_embedding_model(embedder)
 
     # Ingest all documents from the documents/ folder
-    docs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "documents")
+    docs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "documents")
     print("\nIngesting documents from: {}".format(docs_dir))
     print("-" * 80)
 
