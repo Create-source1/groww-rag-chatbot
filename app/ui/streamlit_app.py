@@ -49,7 +49,7 @@ def main():
     with st.sidebar:
         st.header("About")
         st.info(
-            "This is a RAG-powered FAQ assistant over official Groww pages for 5 HDFC "
+            "This is a RAG-powered FAQ assistant over official Groww pages for HDFC "
             "mutual fund schemes. It answers factual questions only — no investment advice."
         )
 
